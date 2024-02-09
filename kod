@@ -1,0 +1,32 @@
+#define MELODY_PIN 9 // Melodi için kullanılacak pin
+#define BUZZER_PIN 10 // Buzzer'ın bağlı olduğu pin
+#define BUTTON_PIN 2 // Düğmenin bağlı olduğu pin
+
+int melody[] = {
+  262, 294, 330, 349, 392, 440, 494, 523
+};
+int noteDuration = 200; // Not süresi
+int buttonState = 0; // Düğme durumu
+
+void setup() {
+  pinMode(BUZZER_PIN, OUTPUT);
+  pinMode(BUTTON_PIN, INPUT);
+}
+
+void loop() {
+  buttonState = digitalRead(BUTTON_PIN);
+
+  if (buttonState == HIGH) {
+    for (int i = 0; i < 8; i++) {
+      playNote(melody[i]);
+      delay(100);
+    }
+    delay(2000);
+  }
+}
+
+void playNote(int note) {
+  tone(MELODY_PIN, note, noteDuration);
+  delay(noteDuration + 50);
+  noTone(MELODY_PIN);
+}
